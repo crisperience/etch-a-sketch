@@ -1,10 +1,8 @@
 const container = document.querySelector(".container");
 
 function createGrid(size) {
-  // Clear any existing grid
-  container.innerHTML = "";
+  container.innerHTML = ""; // Clear the existing grid
 
-  // Set grid dimensions
   container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
@@ -13,9 +11,24 @@ function createGrid(size) {
     const gridSquare = document.createElement("div");
     gridSquare.classList.add("grid-square");
 
-    // Add hover effect for coloring the squares
+    // Set initial opacity to 0
+    gridSquare.style.opacity = 0;
+
+    // Add hover effect for random RGB color and darkening effect
     gridSquare.addEventListener("mouseover", () => {
-      gridSquare.style.backgroundColor = "black";
+      if (gridSquare.style.opacity == 0) {
+        // Randomize RGB color when opacity is 0
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        gridSquare.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+      }
+
+      // Increase opacity by 0.1 up to 1
+      let currentOpacity = parseFloat(gridSquare.style.opacity);
+      if (currentOpacity < 1) {
+        gridSquare.style.opacity = currentOpacity + 0.1;
+      }
     });
 
     container.appendChild(gridSquare);
